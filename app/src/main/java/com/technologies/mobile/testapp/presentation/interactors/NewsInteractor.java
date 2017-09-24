@@ -15,12 +15,22 @@ public class NewsInteractor implements INewsInteractor {
     }
 
     @Override
-    public News getNews(long id) {
-        return newsRepository.getNews(id);
+    public void getNews(final long id, final SingleNewsCallback callback) {
+        new Thread() {
+            @Override
+            public void run() {
+                callback.onSuccess(newsRepository.getNews(id));
+            }
+        };
     }
 
     @Override
-    public List<News> getNews(long offset, int count) {
-        return newsRepository.getNews(offset, count);
+    public void getNews(final long offset, final int count, final NewsCallback callback) {
+        new Thread() {
+            @Override
+            public void run() {
+                callback.onSuccess(newsRepository.getNews(offset, count));
+            }
+        };
     }
 }

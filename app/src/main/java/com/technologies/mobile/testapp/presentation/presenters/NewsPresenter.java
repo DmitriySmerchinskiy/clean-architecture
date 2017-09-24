@@ -24,10 +24,18 @@ public class NewsPresenter {
 
     public void loadData(int offset) {
         newsView.showLoading();
-        List<News> news =
-                newsInteractor
-                        .getNews(offset, Constants.DOWNLOAD_COUNT);
-        newsAdapter.addNewsLast(news);
-        newsView.hideLoading();
+        newsInteractor
+                .getNews(offset, Constants.DOWNLOAD_COUNT, new INewsInteractor.NewsCallback() {
+                    @Override
+                    public void onSuccess(List<News> news) {
+                        newsAdapter.addNewsLast(news);
+                    }
+
+                    @Override
+                    public void onError() {
+                        newsView.hideLoading();
+                    }
+                });
+
     }
 }

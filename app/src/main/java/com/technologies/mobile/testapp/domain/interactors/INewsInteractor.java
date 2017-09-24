@@ -6,6 +6,16 @@ import java.util.List;
 
 public interface INewsInteractor {
 
-    News getNews(long id);
-    List<News> getNews(long offset, int count);
+    void getNews(long id, SingleNewsCallback callback);
+    void getNews(long offset, int count, NewsCallback callback);
+
+    interface SingleNewsCallback{
+        void onSuccess(News news);
+        void onError();
+    }
+
+    interface NewsCallback{
+        void onSuccess(List<News> news);
+        void onError();
+    }
 }

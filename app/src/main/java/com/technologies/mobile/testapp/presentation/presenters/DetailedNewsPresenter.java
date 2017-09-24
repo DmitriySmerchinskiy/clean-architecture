@@ -16,7 +16,17 @@ public class DetailedNewsPresenter {
     }
 
     public void loadNews(long id) {
-        News news = newsInteractor.getNews(id);
-        detailedNewsView.showNews(news);
+        newsInteractor.getNews(id, new INewsInteractor.SingleNewsCallback() {
+
+            @Override
+            public void onSuccess(News news) {
+                detailedNewsView.showNews(news);
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        });
     }
 }
