@@ -50,4 +50,10 @@ public class News {
     public void setContent(String content) {
         this.content = content;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        News o = (News) obj;
+        return this.id == o.getId();
+    }
 }
