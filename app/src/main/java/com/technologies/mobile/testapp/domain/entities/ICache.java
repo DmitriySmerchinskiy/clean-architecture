@@ -8,5 +8,5 @@ public interface ICache {
 
     News getNews(long id);
     List<News> getNews(long offset, int count);
-    void postNews(News news);
+    void addNews(News news);
 }

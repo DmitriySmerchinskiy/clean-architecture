@@ -26,7 +26,9 @@ public class Cache implements ICache {
     }
 
     @Override
-    public void postNews(News news) {
-        database.dao().postNews(news);
+    public void addNews(News news) {
+        if (database.dao().getNews(news.getId()) == null) {
+            database.dao().postNews(news);
+        }
     }
 }

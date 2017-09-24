@@ -21,7 +21,8 @@ public class NewsRepository implements INewsRepository {
     public News getNews(long id) {
         News news = cache.getNews(id);
         if (news == null) {
-            return network.getNews(id);
+            news = network.getNews(id);
+            cache.addNews(news);
         }
         return news;
     }
@@ -30,7 +31,10 @@ public class NewsRepository implements INewsRepository {
     public List<News> getNews(long offset, int count) {
         List<News> news = cache.getNews(offset, count);
         if (news.isEmpty()) {
-            return network.getNews(offset, count);
+            news = network.getNews(offset, count);
+            for (News singleNews : news) {
+                cache.addNews(singleNews);
+            }
         }
         return news;
     }

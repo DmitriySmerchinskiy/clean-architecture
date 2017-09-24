@@ -29,7 +29,7 @@ public class NewsPresenter {
                     @Override
                     public void onSuccess(List<News> news) {
                         newsAdapter.addNewsLast(news);
-                        newsAdapter.notifyDataSetChanged();
+                        newsView.notifyList();
                         newsView.hideLoading();
                     }
 

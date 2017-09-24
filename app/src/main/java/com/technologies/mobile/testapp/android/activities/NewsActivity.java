@@ -21,6 +21,7 @@ public class NewsActivity extends AppCompatActivity implements NewsView {
 
     private NewsPresenter presenter;
     private ProgressBar progressBar;
+    private NewsAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +29,7 @@ public class NewsActivity extends AppCompatActivity implements NewsView {
         setContentView(R.layout.activity_news);
         progressBar = findViewById(R.id.pb_progress);
 
-        NewsAdapter adapter = new NewsAdapter();
+        adapter = new NewsAdapter();
         RecyclerView recyclerView = findViewById(R.id.rv_news_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
@@ -42,6 +43,16 @@ public class NewsActivity extends AppCompatActivity implements NewsView {
                         this,
                         adapter);
         presenter.loadData(0);
+    }
+
+    @Override
+    public void notifyList() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
