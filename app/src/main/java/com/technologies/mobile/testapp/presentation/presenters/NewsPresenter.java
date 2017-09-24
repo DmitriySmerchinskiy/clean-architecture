@@ -27,7 +27,7 @@ public class NewsPresenter {
         List<News> news =
                 newsInteractor
                         .getNews(offset, Constants.DOWNLOAD_COUNT);
-        newsAdapter.addNewsFirst(news);
+        newsAdapter.addNewsLast(news);
         newsView.hideLoading();
     }
 }
