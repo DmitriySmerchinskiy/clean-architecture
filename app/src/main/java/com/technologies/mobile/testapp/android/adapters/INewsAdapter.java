@@ -8,4 +8,5 @@ public interface INewsAdapter {
 
     void addNewsFirst(List<News> news);
     void addNewsLast(List<News> news);
+    void notifyDataSetChanged();
 }

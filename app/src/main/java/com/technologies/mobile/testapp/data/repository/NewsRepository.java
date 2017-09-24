@@ -29,7 +29,7 @@ public class NewsRepository implements INewsRepository {
     @Override
     public List<News> getNews(long offset, int count) {
         List<News> news = cache.getNews(offset, count);
-        if (news == null) {
+        if (news.isEmpty()) {
             return network.getNews(offset, count);
         }
         return news;

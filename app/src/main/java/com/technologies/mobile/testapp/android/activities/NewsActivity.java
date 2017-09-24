@@ -51,6 +51,11 @@ public class NewsActivity extends AppCompatActivity implements NewsView {
 
     @Override
     public void hideLoading() {
-        progressBar.setVisibility(View.GONE);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                progressBar.setVisibility(View.GONE);
+            }
+        });
     }
 }

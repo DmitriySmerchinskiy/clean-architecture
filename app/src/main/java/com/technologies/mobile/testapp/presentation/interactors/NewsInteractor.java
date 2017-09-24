@@ -21,7 +21,7 @@ public class NewsInteractor implements INewsInteractor {
             public void run() {
                 callback.onSuccess(newsRepository.getNews(id));
             }
-        };
+        }.start();
     }
 
     @Override
@@ -31,6 +31,6 @@ public class NewsInteractor implements INewsInteractor {
             public void run() {
                 callback.onSuccess(newsRepository.getNews(offset, count));
             }
-        };
+        }.start();
     }
 }
