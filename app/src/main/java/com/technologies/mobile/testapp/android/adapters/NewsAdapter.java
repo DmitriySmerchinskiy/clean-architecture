@@ -1,12 +1,12 @@
 package com.technologies.mobile.testapp.android.adapters;
 
-import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.technologies.mobile.testapp.R;
-import com.technologies.mobile.testapp.databinding.ItemNewsBinding;
 import com.technologies.mobile.testapp.domain.models.News;
 
 import java.util.LinkedList;
@@ -22,28 +22,32 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> im
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private ItemNewsBinding itemNewsBinding;
+        private TextView tvTitle;
+        private TextView tvType;
+        private TextView tvContent;
 
-        ViewHolder(ItemNewsBinding itemNewsBinding) {
-            super(itemNewsBinding.getRoot());
-            this.itemNewsBinding = itemNewsBinding;
+        ViewHolder(View view) {
+            super(view);
+            tvTitle = view.findViewById(R.id.tv_title);
+            tvType = view.findViewById(R.id.tv_type);
+            tvContent = view.findViewById(R.id.tv_content);
         }
 
         void bind(News news) {
-            itemNewsBinding.setNews(news);
-            itemNewsBinding.executePendingBindings();
+            tvTitle.setText(news.getTitle());
+            tvType.setText(news.getType());
+            tvContent.setText(news.getContent());
         }
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        ItemNewsBinding binding =
-                DataBindingUtil.inflate(
-                        LayoutInflater.from(parent.getContext()),
-                        R.layout.item_news,
-                        parent,
-                        false);
-        return new ViewHolder(binding);
+        return new ViewHolder(
+                LayoutInflater.from(parent.getContext())
+                        .inflate(
+                                R.layout.item_news,
+                                parent,
+                                false));
     }
 
     @Override

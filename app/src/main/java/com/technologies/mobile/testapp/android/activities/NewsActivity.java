@@ -1,10 +1,11 @@
 package com.technologies.mobile.testapp.android.activities;
 
-import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.technologies.mobile.testapp.R;
 import com.technologies.mobile.testapp.android.adapters.NewsAdapter;
@@ -12,24 +13,25 @@ import com.technologies.mobile.testapp.data.cache.Cache;
 import com.technologies.mobile.testapp.data.database.Database;
 import com.technologies.mobile.testapp.data.network.Network;
 import com.technologies.mobile.testapp.data.repository.NewsRepository;
-import com.technologies.mobile.testapp.databinding.ActivityNewsBinding;
 import com.technologies.mobile.testapp.presentation.interactors.NewsInteractor;
 import com.technologies.mobile.testapp.presentation.presenters.NewsPresenter;
 import com.technologies.mobile.testapp.presentation.views.NewsView;
 
 public class NewsActivity extends AppCompatActivity implements NewsView {
 
-    ActivityNewsBinding binding;
-    NewsPresenter presenter;
+    private NewsPresenter presenter;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_news);
+        setContentView(R.layout.activity_news);
+        progressBar = findViewById(R.id.pb_progress);
 
         NewsAdapter adapter = new NewsAdapter();
-        binding.rvNewsList.setLayoutManager(new LinearLayoutManager(this));
-        binding.rvNewsList.setAdapter(adapter);
+        RecyclerView recyclerView = findViewById(R.id.rv_news_list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
 
         presenter =
                 new NewsPresenter(
@@ -44,11 +46,11 @@ public class NewsActivity extends AppCompatActivity implements NewsView {
 
     @Override
     public void showLoading() {
-        binding.pbProgress.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoading() {
-        binding.pbProgress.setVisibility(View.GONE);
+        progressBar.setVisibility(View.GONE);
     }
 }

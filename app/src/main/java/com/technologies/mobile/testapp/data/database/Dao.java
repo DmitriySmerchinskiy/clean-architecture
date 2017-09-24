@@ -13,7 +13,7 @@ public interface Dao {
     @Query("SELECT * FROM News WHERE id = :id LIMIT 1")
     News getNews(long id);
 
-    @Query("SELECT * FROM News LIMIT :count")
+    @Query("SELECT * FROM News LIMIT :count OFFSET :offset")
     List<News> getNews(long offset, int count);
 
     @Insert
