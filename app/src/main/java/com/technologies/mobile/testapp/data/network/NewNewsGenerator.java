@@ -3,9 +3,9 @@ package com.technologies.mobile.testapp.data.network;
 import com.technologies.mobile.testapp.domain.entities.IFakeNewsGenerator;
 import com.technologies.mobile.testapp.domain.models.News;
 
-public class OldNewsGenerator implements IFakeNewsGenerator {
+public class NewNewsGenerator implements IFakeNewsGenerator {
 
-    private static final long MAX_TIME = Long.MAX_VALUE;
+    private static final long VALUE = 9223369024100868167L;
 
     @Override
     public News generateNews() {
@@ -17,7 +17,7 @@ public class OldNewsGenerator implements IFakeNewsGenerator {
                         "News #" + id,
                         "News",
                         "Content of news #" + id,
-                        MAX_TIME - 2 * System.currentTimeMillis());
+                        System.currentTimeMillis() + VALUE);
     }
 
     private void fakeWait(int time) {
