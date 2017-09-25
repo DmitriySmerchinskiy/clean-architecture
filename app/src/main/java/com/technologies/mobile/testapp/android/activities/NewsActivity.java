@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -22,9 +23,12 @@ import com.technologies.mobile.testapp.presentation.views.NewsView;
 
 public class NewsActivity extends AppCompatActivity implements NewsView, INewsAdapter.onItemClickListener {
 
+    private static final String TAG = "NewsActivity";
+
     private NewsPresenter presenter;
     private ProgressBar progressBar;
     private NewsAdapter adapter;
+    private LinearLayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +38,10 @@ public class NewsActivity extends AppCompatActivity implements NewsView, INewsAd
 
         adapter = new NewsAdapter(this);
         RecyclerView recyclerView = findViewById(R.id.rv_news_list);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+        recyclerView.addOnScrollListener(new RecyclerScrollListener());
 
         presenter =
                 new NewsPresenter(
@@ -78,5 +84,14 @@ public class NewsActivity extends AppCompatActivity implements NewsView, INewsAd
         Intent intent = new Intent(getApplicationContext(), DetailedNewsActivity.class);
         intent.putExtra(DetailedNewsActivity.EXTRA_ID, news.getId());
         startActivity(intent);
+    }
+
+    private class RecyclerScrollListener extends RecyclerView.OnScrollListener {
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            if (layoutManager.findLastVisibleItemPosition() > adapter.getItemCount() - 5) {
+                presenter.loadData(adapter.getItemCount());
+            }
+        }
     }
 }
