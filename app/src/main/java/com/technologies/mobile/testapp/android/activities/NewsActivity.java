@@ -13,6 +13,7 @@ import com.technologies.mobile.testapp.Constants;
 import com.technologies.mobile.testapp.R;
 import com.technologies.mobile.testapp.android.adapters.INewsAdapter;
 import com.technologies.mobile.testapp.android.adapters.NewsAdapter;
+import com.technologies.mobile.testapp.android.broadcasts.RegularReceiver;
 import com.technologies.mobile.testapp.data.cache.Cache;
 import com.technologies.mobile.testapp.data.database.Database;
 import com.technologies.mobile.testapp.data.network.FakeNetwork;
@@ -26,8 +27,6 @@ import com.technologies.mobile.testapp.presentation.views.NewsView;
 
 public class NewsActivity extends AppCompatActivity implements NewsView, INewsAdapter.onItemClickListener {
 
-    private static final String TAG = "NewsActivity";
-
     private NewsPresenter presenter;
     private NewsAdapter adapter;
     private LinearLayoutManager layoutManager;
@@ -37,6 +36,11 @@ public class NewsActivity extends AppCompatActivity implements NewsView, INewsAd
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_news);
+
+        sendBroadcast(new Intent(
+                getApplicationContext(),
+                RegularReceiver.class)
+                .setAction(RegularReceiver.class.getName()));
 
         adapter = new NewsAdapter(this);
         layoutManager = new LinearLayoutManager(getApplicationContext());
