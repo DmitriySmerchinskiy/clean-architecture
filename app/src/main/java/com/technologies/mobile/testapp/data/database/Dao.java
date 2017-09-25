@@ -18,4 +18,11 @@ public interface Dao {
 
     @Insert
     void postNews(News news);
+
+    @Query("DELETE FROM News WHERE unixTime IN " +
+            "(SELECT unixTime FROM News ORDER BY unixTime LIMIT :count)")
+    void clearOldNotes(int count);
+
+    @Query("SELECT COUNT(*) FROM News")
+    long getRowsCount();
 }
