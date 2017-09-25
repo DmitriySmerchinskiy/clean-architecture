@@ -11,12 +11,14 @@ public class News {
     private String title;
     private String type;
     private String content;
+    private long unixTime;
 
-    public News(long id, String title, String type, String content) {
+    public News(long id, String title, String type, String content, long unixTime) {
         this.id = id;
         this.title = title;
         this.type = type;
         this.content = content;
+        this.unixTime = unixTime;
     }
 
     public long getId() {
@@ -49,6 +51,14 @@ public class News {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public long getUnixTime() {
+        return unixTime;
+    }
+
+    public void setUnixTime(long unixTime) {
+        this.unixTime = unixTime;
     }
 
     @Override

@@ -7,7 +7,8 @@ import android.os.Bundle;
 import com.technologies.mobile.testapp.R;
 import com.technologies.mobile.testapp.data.cache.Cache;
 import com.technologies.mobile.testapp.data.database.Database;
-import com.technologies.mobile.testapp.data.network.Network;
+import com.technologies.mobile.testapp.data.network.FakeNetwork;
+import com.technologies.mobile.testapp.data.network.OldNewsGenerator;
 import com.technologies.mobile.testapp.data.repository.NewsRepository;
 import com.technologies.mobile.testapp.databinding.ActivityDetailedNewsBinding;
 import com.technologies.mobile.testapp.domain.models.News;
@@ -28,7 +29,8 @@ public class DetailedNewsActivity extends AppCompatActivity implements DetailedN
         new DetailedNewsPresenter(
                 new NewsInteractor(
                         new NewsRepository(
-                                new Network(),
+                                new FakeNetwork(
+                                        new OldNewsGenerator()),
                                 new Cache(Database.get(getApplicationContext())))),
                 this)
                 .loadNews(

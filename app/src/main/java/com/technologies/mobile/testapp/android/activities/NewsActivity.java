@@ -14,7 +14,8 @@ import com.technologies.mobile.testapp.android.adapters.INewsAdapter;
 import com.technologies.mobile.testapp.android.adapters.NewsAdapter;
 import com.technologies.mobile.testapp.data.cache.Cache;
 import com.technologies.mobile.testapp.data.database.Database;
-import com.technologies.mobile.testapp.data.network.Network;
+import com.technologies.mobile.testapp.data.network.FakeNetwork;
+import com.technologies.mobile.testapp.data.network.OldNewsGenerator;
 import com.technologies.mobile.testapp.data.repository.NewsRepository;
 import com.technologies.mobile.testapp.domain.models.News;
 import com.technologies.mobile.testapp.databinding.ActivityNewsBinding;
@@ -46,7 +47,8 @@ public class NewsActivity extends AppCompatActivity implements NewsView, INewsAd
                 new NewsPresenter(
                         new NewsInteractor(
                                 new NewsRepository(
-                                        new Network(),
+                                        new FakeNetwork(
+                                                new OldNewsGenerator()),
                                         new Cache(Database.get(getApplicationContext())))),
                         this,
                         adapter);
