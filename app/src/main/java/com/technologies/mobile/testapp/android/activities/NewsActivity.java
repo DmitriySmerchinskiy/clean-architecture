@@ -1,13 +1,13 @@
 package com.technologies.mobile.testapp.android.activities;
 
+
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
-import android.widget.ProgressBar;
 
 import com.technologies.mobile.testapp.R;
 import com.technologies.mobile.testapp.android.adapters.INewsAdapter;
@@ -17,6 +17,7 @@ import com.technologies.mobile.testapp.data.database.Database;
 import com.technologies.mobile.testapp.data.network.Network;
 import com.technologies.mobile.testapp.data.repository.NewsRepository;
 import com.technologies.mobile.testapp.domain.models.News;
+import com.technologies.mobile.testapp.databinding.ActivityNewsBinding;
 import com.technologies.mobile.testapp.presentation.interactors.NewsInteractor;
 import com.technologies.mobile.testapp.presentation.presenters.NewsPresenter;
 import com.technologies.mobile.testapp.presentation.views.NewsView;
@@ -26,22 +27,20 @@ public class NewsActivity extends AppCompatActivity implements NewsView, INewsAd
     private static final String TAG = "NewsActivity";
 
     private NewsPresenter presenter;
-    private ProgressBar progressBar;
     private NewsAdapter adapter;
     private LinearLayoutManager layoutManager;
+    ActivityNewsBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_news);
-        progressBar = findViewById(R.id.pb_progress);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_news);
 
         adapter = new NewsAdapter(this);
-        RecyclerView recyclerView = findViewById(R.id.rv_news_list);
         layoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
-        recyclerView.addOnScrollListener(new RecyclerScrollListener());
+        binding.rvNewsList.setLayoutManager(layoutManager);
+        binding.rvNewsList.setAdapter(adapter);
+        binding.rvNewsList.addOnScrollListener(new RecyclerScrollListener());
 
         presenter =
                 new NewsPresenter(
@@ -66,7 +65,7 @@ public class NewsActivity extends AppCompatActivity implements NewsView, INewsAd
 
     @Override
     public void showLoading() {
-        progressBar.setVisibility(View.VISIBLE);
+        binding.pbProgress.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -74,7 +73,7 @@ public class NewsActivity extends AppCompatActivity implements NewsView, INewsAd
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                progressBar.setVisibility(View.GONE);
+                binding.pbProgress.setVisibility(View.GONE);
             }
         });
     }

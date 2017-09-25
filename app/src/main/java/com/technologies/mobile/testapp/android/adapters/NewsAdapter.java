@@ -1,12 +1,13 @@
 package com.technologies.mobile.testapp.android.adapters;
 
+import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.technologies.mobile.testapp.R;
+import com.technologies.mobile.testapp.databinding.ItemNewsBinding;
 import com.technologies.mobile.testapp.domain.models.News;
 
 import java.util.LinkedList;
@@ -24,40 +25,34 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> im
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        private View view;
-        private TextView tvTitle;
-        private TextView tvType;
-        private TextView tvContent;
+        private ItemNewsBinding itemNewsBinding;
 
-        ViewHolder(View view) {
-            super(view);
-            this.view = view;
-            tvTitle = view.findViewById(R.id.tv_title);
-            tvType = view.findViewById(R.id.tv_type);
-            tvContent = view.findViewById(R.id.tv_content);
+        ViewHolder(ItemNewsBinding itemNewsBinding) {
+            super(itemNewsBinding.getRoot());
+            this.itemNewsBinding = itemNewsBinding;
         }
 
         void bind(final News news) {
-            view.setOnClickListener(new View.OnClickListener() {
+            itemNewsBinding.setNews(news);
+            itemNewsBinding.getRoot().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     onItemClickListener.onItemClicked(news);
                 }
             });
-            tvTitle.setText(news.getTitle());
-            tvType.setText(news.getType());
-            tvContent.setText(news.getContent());
+            itemNewsBinding.executePendingBindings();
         }
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(
-                LayoutInflater.from(parent.getContext())
-                        .inflate(
-                                R.layout.item_news,
-                                parent,
-                                false));
+        ItemNewsBinding binding =
+                DataBindingUtil.inflate(
+                        LayoutInflater.from(parent.getContext()),
+                        R.layout.item_news,
+                        parent,
+                        false);
+        return new ViewHolder(binding);
     }
 
     @Override
