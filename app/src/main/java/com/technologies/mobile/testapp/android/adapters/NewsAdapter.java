@@ -8,7 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.technologies.mobile.testapp.R;
+import com.technologies.mobile.testapp.data.structure.TimeProtectedList;
 import com.technologies.mobile.testapp.databinding.ItemNewsBinding;
+import com.technologies.mobile.testapp.domain.entities.IList;
 import com.technologies.mobile.testapp.domain.models.News;
 
 import java.util.ArrayList;
@@ -16,12 +18,12 @@ import java.util.List;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> implements INewsAdapter {
 
-    private List<News> mNews;
+    private IList<News> mNews;
     private INewsAdapter.onItemClickListener onItemClickListener;
 
     public NewsAdapter(INewsAdapter.onItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
-        mNews = new ArrayList<>();
+        mNews = new TimeProtectedList<>(new ArrayList<News>());
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
