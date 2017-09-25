@@ -69,18 +69,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> im
     }
 
     @Override
-    public void addNewsFirst(List<News> news) {
-        int i = 0;
-        for (News singleNews : news) {
-            if (!mNews.get(i).equals(singleNews)) {
-                mNews.add(i, singleNews);
-            } else {
-                break;
-            }
-        }
-    }
-
-    @Override
     public void addNewsLast(List<News> news) {
         mNews.addAll(news);
     }

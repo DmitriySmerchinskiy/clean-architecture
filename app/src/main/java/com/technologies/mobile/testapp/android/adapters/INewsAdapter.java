@@ -6,8 +6,6 @@ import java.util.List;
 
 public interface INewsAdapter {
 
-    void addNewsFirst(List<News> news);
-
     void addNewsLast(List<News> news);
 
     interface onItemClickListener {
