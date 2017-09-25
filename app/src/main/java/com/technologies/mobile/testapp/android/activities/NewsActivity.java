@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.technologies.mobile.testapp.Constants;
 import com.technologies.mobile.testapp.R;
 import com.technologies.mobile.testapp.android.adapters.INewsAdapter;
 import com.technologies.mobile.testapp.android.adapters.NewsAdapter;
@@ -90,7 +91,8 @@ public class NewsActivity extends AppCompatActivity implements NewsView, INewsAd
     private class RecyclerScrollListener extends RecyclerView.OnScrollListener {
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-            if (layoutManager.findLastVisibleItemPosition() > adapter.getItemCount() - 5) {
+            if (layoutManager.findLastVisibleItemPosition()
+                    >= adapter.getItemCount() - Constants.REMAIN_ITEMS_TRIGGER) {
                 presenter.loadData(adapter.getItemCount());
             }
         }
