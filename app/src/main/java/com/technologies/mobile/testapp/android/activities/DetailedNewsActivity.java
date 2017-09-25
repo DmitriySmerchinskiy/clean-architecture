@@ -29,18 +29,22 @@ public class DetailedNewsActivity extends AppCompatActivity implements DetailedN
                                 new Cache(Database.get(getApplicationContext())))),
                 this)
                 .loadNews(
-                        getIntent()
-                                .getIntExtra(EXTRA_ID, 0));
+                        getIntent().getLongExtra(EXTRA_ID, 0));
     }
 
     @Override
-    public void showNews(News news) {
-        TextView title = findViewById(R.id.tv_title);
-        TextView type = findViewById(R.id.tv_type);
-        TextView content = findViewById(R.id.tv_content);
+    public void showNews(final News news) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                TextView title = findViewById(R.id.tv_title);
+                TextView type = findViewById(R.id.tv_type);
+                TextView content = findViewById(R.id.tv_content);
 
-        title.setText(news.getTitle());
-        type.setText(news.getType());
-        content.setText(news.getContent());
+                title.setText(news.getTitle());
+                type.setText(news.getType());
+                content.setText(news.getContent());
+            }
+        });
     }
 }

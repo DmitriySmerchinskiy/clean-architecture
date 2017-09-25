@@ -1,5 +1,6 @@
 package com.technologies.mobile.testapp.android.activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,16 +9,18 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.technologies.mobile.testapp.R;
+import com.technologies.mobile.testapp.android.adapters.INewsAdapter;
 import com.technologies.mobile.testapp.android.adapters.NewsAdapter;
 import com.technologies.mobile.testapp.data.cache.Cache;
 import com.technologies.mobile.testapp.data.database.Database;
 import com.technologies.mobile.testapp.data.network.Network;
 import com.technologies.mobile.testapp.data.repository.NewsRepository;
+import com.technologies.mobile.testapp.domain.models.News;
 import com.technologies.mobile.testapp.presentation.interactors.NewsInteractor;
 import com.technologies.mobile.testapp.presentation.presenters.NewsPresenter;
 import com.technologies.mobile.testapp.presentation.views.NewsView;
 
-public class NewsActivity extends AppCompatActivity implements NewsView {
+public class NewsActivity extends AppCompatActivity implements NewsView, INewsAdapter.onItemClickListener {
 
     private NewsPresenter presenter;
     private ProgressBar progressBar;
@@ -29,7 +32,7 @@ public class NewsActivity extends AppCompatActivity implements NewsView {
         setContentView(R.layout.activity_news);
         progressBar = findViewById(R.id.pb_progress);
 
-        adapter = new NewsAdapter();
+        adapter = new NewsAdapter(this);
         RecyclerView recyclerView = findViewById(R.id.rv_news_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
@@ -68,5 +71,12 @@ public class NewsActivity extends AppCompatActivity implements NewsView {
                 progressBar.setVisibility(View.GONE);
             }
         });
+    }
+
+    @Override
+    public void onItemClicked(News news) {
+        Intent intent = new Intent(getApplicationContext(), DetailedNewsActivity.class);
+        intent.putExtra(DetailedNewsActivity.EXTRA_ID, news.getId());
+        startActivity(intent);
     }
 }

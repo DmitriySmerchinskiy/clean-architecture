@@ -15,25 +15,35 @@ import java.util.List;
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> implements INewsAdapter {
 
     private LinkedList<News> mNews;
+    private INewsAdapter.onItemClickListener onItemClickListener;
 
-    public NewsAdapter() {
+    public NewsAdapter(INewsAdapter.onItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
         mNews = new LinkedList<>();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
+        private View view;
         private TextView tvTitle;
         private TextView tvType;
         private TextView tvContent;
 
         ViewHolder(View view) {
             super(view);
+            this.view = view;
             tvTitle = view.findViewById(R.id.tv_title);
             tvType = view.findViewById(R.id.tv_type);
             tvContent = view.findViewById(R.id.tv_content);
         }
 
-        void bind(News news) {
+        void bind(final News news) {
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onItemClickListener.onItemClicked(news);
+                }
+            });
             tvTitle.setText(news.getTitle());
             tvType.setText(news.getType());
             tvContent.setText(news.getContent());
