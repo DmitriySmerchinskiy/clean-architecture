@@ -10,17 +10,17 @@ import com.technologies.mobile.testapp.R;
 import com.technologies.mobile.testapp.databinding.ItemNewsBinding;
 import com.technologies.mobile.testapp.domain.models.News;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> implements INewsAdapter {
 
-    private LinkedList<News> mNews;
+    private List<News> mNews;
     private INewsAdapter.onItemClickListener onItemClickListener;
 
     public NewsAdapter(INewsAdapter.onItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
-        mNews = new LinkedList<>();
+        mNews = new ArrayList<>();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
